@@ -18,7 +18,7 @@ use super::Serial;
 
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Theme {
     /// Key to the background color.
     pub color: Color,

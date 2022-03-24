@@ -11,7 +11,7 @@ use super::Serial;
 
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Theme {
     /// Border color.
     pub color: Color,

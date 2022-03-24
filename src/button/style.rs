@@ -19,7 +19,7 @@ use super::{ Component, Serial, StateSerial };
 
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct Theme {
     /// Active state.
     pub active: StateTheme,
@@ -93,7 +93,7 @@ impl StyleSheet for Theme {
 
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Copy, Debug)]
 pub struct StateTheme {
     /// Background color.
     background: Color,
