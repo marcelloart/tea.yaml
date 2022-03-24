@@ -69,8 +69,10 @@ impl Theme {
 
                     Some( Theme { active, hovered, pressed, disabled } )
                 },
+
                 _ => None,
             },
+
             _ => None,
         }
     }

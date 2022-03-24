@@ -53,6 +53,7 @@ impl Theme {
 
                 _ => None,
             },
+
             _ => None,
         }
     }
