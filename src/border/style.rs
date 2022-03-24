@@ -32,19 +32,19 @@ impl Theme {
 
     /// Gets the background theme with the given key (if it exists).
     pub fn extract(theme: &Collection, name: String) -> Option<Self> {
-        match theme.styles.get(name) {
-            Some(stylestr) => match theme.container.get(stylestr) {
+        match theme.styles.get(&name) {
+            Some(stylestr) => match theme.border.get(&stylestr.0) {
                 Some(serial) => {
                     // Destructure the serialized version.
                     let Serial { color: colorstr, radius, width } = serial;
 
                     // Get the background color.
                     let color = match theme.color.get(colorstr) {
-                        Some(c) => c,
+                        Some(c) => *c,
                         _ => Color::BORDER,
                     };
 
-                    Some( Theme { color, radius, width } )
+                    Some( Theme { color, radius: *radius, width: *width } )
                 },
 
                 _ => None,

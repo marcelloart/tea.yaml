@@ -37,32 +37,32 @@ pub struct Theme {
 impl Theme {
     /// Gets the background theme with the given key (if it exists).
     pub fn extract(theme: &Collection, name: String) -> Option<Self> {
-        match theme.styles.get(name) {
-            Some(stylestr) => match theme.button.get(stylestr) {
+        match theme.styles.get(&name) {
+            Some(stylestr) => match theme.button.get(&stylestr.0) {
                 Some(serial) => {
                     // Destructure the serialized version.
                     let Serial { active, hovered, pressed, disabled } = serial;
 
                     // Get the active state theme.
-                    let active = match StateTheme::active(theme, active) {
+                    let active = match StateTheme::active(theme, active.clone()) {
                         Some(t) => t,
                         _ => StateTheme::DEFAULT,
                     };
 
                     // Get the hovered state theme.
-                    let hovered = match StateTheme::hovered(theme, hovered) {
+                    let hovered = match StateTheme::hovered(theme, hovered.clone()) {
                         Some(t) => t,
                         _ => active.clone(),
                     };
 
                     // Get the pressed state theme.
-                    let pressed = match StateTheme::pressed(theme, pressed) {
+                    let pressed = match StateTheme::pressed(theme, pressed.clone()) {
                         Some(t) => t,
                         _ => active.clone(),
                     };
 
                     // Get the disabled state theme.
-                    let disabled = match StateTheme::disabled(theme, disabled) {
+                    let disabled = match StateTheme::disabled(theme, disabled.clone()) {
                         Some(t) => t,
                         _ => active.clone(),
                     };
@@ -115,14 +115,14 @@ impl StateTheme {
         let StateSerial { background, textcolor, border } = serial;
 
         // Get the background color.
-        let background = match theme.color.get(background) {
-            Some(c) => c,
+        let background = match theme.color.get(&background) {
+            Some(c) => *c,
             _ => Color::BUTTONBG,
         };
 
         // Get the text color.
-        let textcolor = match theme.color.get(textcolor) {
-            Some(c) => c,
+        let textcolor = match theme.color.get(&textcolor) {
+            Some(c) => *c,
             _ => Color::BUTTONTXT,
         };
 
