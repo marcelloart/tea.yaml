@@ -1,4 +1,4 @@
-//! `iced` compatible version of the button theme.
+//! `iced` compatible version of the checkbox theme.
 
 
 
@@ -9,8 +9,7 @@ use crate::{
 };
 
 use iced::{
-    Vector,
-    button::{
+    checkbox::{
         Style, StyleSheet,
     },
 };
@@ -26,22 +25,16 @@ pub struct Theme {
 
     /// Hovered state.
     pub hovered: StateTheme,
-
-    /// Pressed state.
-    pub pressed: StateTheme,
-
-    /// Disabled state.
-    pub disabled: StateTheme,
 }
 
 impl Theme {
     /// Gets the background theme with the given key (if it exists).
     pub fn extract(theme: &Collection, name: String) -> Option<Self> {
         match theme.styles.get(&name) {
-            Some(stylestr) => match theme.button.get(&stylestr.0) {
+            Some(stylestr) => match theme.checkbox.get(&stylestr.0) {
                 Some(serial) => {
                     // Destructure the serialized version.
-                    let Serial { active, hovered, pressed, disabled } = serial;
+                    let Serial { active, hovered } = serial;
 
                     // Get the active state theme.
                     let active = match StateTheme::active(theme, active.clone()) {
@@ -55,19 +48,7 @@ impl Theme {
                         _ => active.clone(),
                     };
 
-                    // Get the pressed state theme.
-                    let pressed = match StateTheme::pressed(theme, pressed.clone()) {
-                        Some(t) => t,
-                        _ => active.clone(),
-                    };
-
-                    // Get the disabled state theme.
-                    let disabled = match StateTheme::disabled(theme, disabled.clone()) {
-                        Some(t) => t,
-                        _ => active.clone(),
-                    };
-
-                    Some( Theme { active, hovered, pressed, disabled } )
+                    Some( Theme { active, hovered } )
                 },
 
                 _ => None,
@@ -79,20 +60,12 @@ impl Theme {
 }
 
 impl StyleSheet for Theme {
-    fn active(&self) -> Style {
-        self.active.into()
+    fn active(&self, checked: bool) -> Style {
+        self.active.style(checked)
     }
 
-    fn hovered(&self) -> Style {
-        self.hovered.into()
-    }
-
-    fn pressed(&self) -> Style {
-        self.pressed.into()
-    }
-
-    fn disabled(&self) -> Style {
-        self.disabled.into()
+    fn hovered(&self, checked: bool) -> Style {
+        self.hovered.style(checked)
     }
 }
 
@@ -103,8 +76,8 @@ pub struct StateTheme {
     /// Background color.
     background: Color,
 
-    /// Text color.
-    textcolor: Color,
+    /// Checkmark color.
+    checkmark: Color,
 
     /// Border theme.
     border: Border,
@@ -112,12 +85,12 @@ pub struct StateTheme {
 
 impl StateTheme {
     /// Default state theme.
-    pub const DEFAULT: StateTheme = StateTheme { background: Color::WHITE, textcolor: Color::BLACK, border: Border::DEFAULT };
+    pub const DEFAULT: StateTheme = StateTheme { background: Color::WHITE, checkmark: Color::RED, border: Border::DEFAULT };
 
     /// Gets the `StateTheme` from a defined serial.
     pub(self) fn defined(theme: &Collection, serial: StateSerial) -> Self {
         // Destructure the serial.
-        let StateSerial { background, textcolor, border } = serial;
+        let StateSerial { background, checkmark, border } = serial;
 
         // Get the background color.
         let background = match theme.color.get(&background) {
@@ -125,10 +98,10 @@ impl StateTheme {
             _ => Color::WHITE,
         };
 
-        // Get the text color.
-        let textcolor = match theme.color.get(&textcolor) {
+        // Get the checkmark color.
+        let checkmark = match theme.color.get(&checkmark) {
             Some(c) => *c,
-            _ => Color::BLACK,
+            _ => Color::RED,
         };
 
         // Get the border theme.
@@ -137,7 +110,7 @@ impl StateTheme {
             _ => Border::DEFAULT,
         };
 
-        StateTheme { background, textcolor, border }
+        StateTheme { background, checkmark, border }
     }
 
     /// Gets the `StateTheme` from the active component.
@@ -168,44 +141,17 @@ impl StateTheme {
         }
     }
 
-    /// Gets the `StateTheme` from the pressed component.
-    pub(self) fn pressed(theme: &Collection, component: Component) -> Option<Self> {
-        match component {
-            Component::Defined(serial) => Some( Self::defined(theme, serial) ),
+    /// Converts into a style.
+    pub(self) fn style(&self, checked: bool) -> Style {
+        let checkmark_color = if checked { self.checkmark.into() }
+            else { iced::Color::from_rgba(0.0, 0.0, 0.0, 0.0) };
 
-            Component::Inherited(name) => match Theme::extract(theme, name) {
-                Some(button) => Some( button.pressed.clone() ),
-                _ => None,
-            },
-
-            Component::None => None,
-        }
-    }
-
-    /// Gets the `StateTheme` from the disabled component.
-    pub(self) fn disabled(theme: &Collection, component: Component) -> Option<Self> {
-        match component {
-            Component::Defined(serial) => Some( Self::defined(theme, serial) ),
-
-            Component::Inherited(name) => match Theme::extract(theme, name) {
-                Some(button) => Some( button.disabled.clone() ),
-                _ => None,
-            },
-
-            Component::None => None,
-        }
-    }
-}
-
-impl core::convert::Into<Style> for StateTheme {
-    fn into(self) -> Style {
         Style {
-            background: Some( self.background.into() ),
+            background: self.background.into(),
             border_color: self.border.color.into(),
             border_radius: self.border.radius,
             border_width: self.border.width,
-            shadow_offset: Vector::new(0.0, 0.0),
-            text_color: self.textcolor.into(),
+            checkmark_color,
         }
     }
 }

@@ -5,8 +5,10 @@
 use crate::{
     border::Serial as Border,
     button::Serial as Button,
+    checkbox::Serial as Checkbox,
     color::Color,
     container::Serial as Container,
+    textinput::Serial as TextInput,
 };
 
 use serde::{ Deserialize, Serialize };
@@ -38,9 +40,15 @@ pub struct Theme {
     /// Maps name keys to button themes.
     pub button: HashMap<String, Button>,
 
+    /// Maps name keys to checkbox themes.
+    pub checkbox: HashMap<String, Checkbox>,
+
     /// Maps name keys to colors.
     pub color: HashMap<String, Color>,
 
     /// Maps name keys to container themes.
     pub container: HashMap<String, Container>,
+
+    /// Maps name keys to text input themes.
+    pub textinput: HashMap<String, TextInput>,
 }

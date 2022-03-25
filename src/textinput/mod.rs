@@ -1,4 +1,4 @@
-//! Border theme.
+//! text input theme.
 
 
 
@@ -8,9 +8,8 @@ mod style;
 
 
 pub use self::serial::{
-    Button as Serial,
-    ButtonState as StateSerial,
+    TextInput as Serial,
+    TextInputState as StateSerial,
     Component,
 };
-
 pub use self::style::Theme;

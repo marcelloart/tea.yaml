@@ -1,4 +1,4 @@
-//! Border theme.
+//! Checkbox theme.
 
 
 
@@ -8,8 +8,8 @@ mod style;
 
 
 pub use self::serial::{
-    Button as Serial,
-    ButtonState as StateSerial,
+    Checkbox as Serial,
+    CheckboxState as StateSerial,
     Component,
 };
 

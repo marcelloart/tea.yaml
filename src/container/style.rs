@@ -39,13 +39,13 @@ impl Theme {
                     // Get the background color.
                     let color = match theme.color.get(colorstr) {
                         Some(c) => *c,
-                        _ => Color::CONTAINER,
+                        _ => Color::WHITE,
                     };
 
                     // Get the border style.
                     let border = match Border::extract(theme, borderstr.clone()) {
                         Some(b) => b,
-                        _ => Border::CONTAINER,
+                        _ => Border::BORDERLESS,
                     };
 
                     Some( Theme { color, border } )

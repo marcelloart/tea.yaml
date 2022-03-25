@@ -25,10 +25,10 @@ pub struct Theme {
 
 impl Theme {
     /// Default border for a button.
-    pub const BUTTON: Theme = Theme { color: Color::BLACK, radius: 0.0, width: 1.0 };
+    pub const DEFAULT: Theme = Theme { color: Color::BLACK, radius: 0.0, width: 1.0 };
 
     /// Default border for a container.
-    pub const CONTAINER: Theme = Theme { color: Color::BORDER, radius: 0.0, width: 0.0 };
+    pub const BORDERLESS: Theme = Theme { color: Color::BLACK, radius: 0.0, width: 0.0 };
 
     /// Gets the background theme with the given key (if it exists).
     pub fn extract(theme: &Collection, name: String) -> Option<Self> {
@@ -41,7 +41,7 @@ impl Theme {
                     // Get the background color.
                     let color = match theme.color.get(colorstr) {
                         Some(c) => *c,
-                        _ => Color::BORDER,
+                        _ => Color::BLACK,
                     };
 
                     Some( Theme { color, radius: *radius, width: *width } )
