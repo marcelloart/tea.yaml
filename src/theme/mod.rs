@@ -11,6 +11,7 @@ use crate::{
     panegrid::Serial as PaneGrid,
     progressbar::Serial as ProgressBar,
     radio::Serial as Radio,
+    scrollable::Serial as Scrollable,
     textinput::Serial as TextInput,
 };
 
@@ -60,6 +61,9 @@ pub struct Theme {
 
     /// Maps name keys to radio themes.
     pub radio: HashMap<String, Radio>,
+
+    /// Maps name keys to scrollable themes.
+    pub scrollable: HashMap<String, Scrollable>,
 
     /// Maps name keys to text input themes.
     pub textinput: HashMap<String, TextInput>,

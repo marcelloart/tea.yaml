@@ -12,6 +12,7 @@ pub mod container;
 pub mod panegrid;
 pub mod progressbar;
 pub mod radio;
+pub mod scrollable;
 pub mod textinput;
 
 mod theme;
