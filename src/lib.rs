@@ -9,6 +9,8 @@ pub mod button;
 pub mod checkbox;
 pub mod color;
 pub mod container;
+pub mod progressbar;
+pub mod radio;
 pub mod textinput;
 
 mod theme;

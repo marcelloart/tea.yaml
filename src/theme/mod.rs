@@ -8,6 +8,8 @@ use crate::{
     checkbox::Serial as Checkbox,
     color::Color,
     container::Serial as Container,
+    progressbar::Serial as ProgressBar,
+    radio::Serial as Radio,
     textinput::Serial as TextInput,
 };
 
@@ -48,6 +50,12 @@ pub struct Theme {
 
     /// Maps name keys to container themes.
     pub container: HashMap<String, Container>,
+
+    /// Maps name keys to progress bar themes.
+    pub progressbar: HashMap<String, ProgressBar>,
+
+    /// Maps name keys to radio themes.
+    pub radio: HashMap<String, Radio>,
 
     /// Maps name keys to text input themes.
     pub textinput: HashMap<String, TextInput>,
