@@ -9,6 +9,7 @@ use crate::{
     color::Color,
     container::Serial as Container,
     panegrid::Serial as PaneGrid,
+    picklist::Serial as Picklist,
     progressbar::Serial as ProgressBar,
     radio::Serial as Radio,
     rule::Serial as Rule,
@@ -58,6 +59,9 @@ pub struct Theme {
 
     /// Maps name keys to pane grid themes.
     pub panegrid: HashMap<String, PaneGrid>,
+
+    /// Maps name keys to picklist themes.
+    pub picklist: HashMap<String, Picklist>,
 
     /// Maps name keys to progress bar themes.
     pub progressbar: HashMap<String, ProgressBar>,
