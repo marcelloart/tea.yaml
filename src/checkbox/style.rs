@@ -119,7 +119,7 @@ impl StateTheme {
             Component::Defined(serial) => Some( Self::defined(theme, serial) ),
 
             Component::Inherited(name) => match Theme::extract(theme, name) {
-                Some(button) => Some( button.active.clone() ),
+                Some(checkbox) => Some( checkbox.active.clone() ),
                 _ => None,
             },
 
@@ -133,7 +133,7 @@ impl StateTheme {
             Component::Defined(serial) => Some( Self::defined(theme, serial) ),
 
             Component::Inherited(name) => match Theme::extract(theme, name) {
-                Some(button) => Some( button.hovered.clone() ),
+                Some(checkbox) => Some( checkbox.hovered.clone() ),
                 _ => None,
             },
 
