@@ -16,6 +16,7 @@ pub mod rule;
 pub mod scrollable;
 pub mod slider;
 pub mod textinput;
+pub mod tooltip;
 
 mod theme;
 

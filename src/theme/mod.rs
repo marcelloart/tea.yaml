@@ -15,6 +15,7 @@ use crate::{
     scrollable::Serial as Scrollable,
     slider::Serial as Slider,
     textinput::Serial as TextInput,
+    tooltip::Serial as Tooltip,
 };
 
 use serde::{ Deserialize, Serialize };
@@ -75,4 +76,7 @@ pub struct Theme {
 
     /// Maps name keys to text input themes.
     pub textinput: HashMap<String, TextInput>,
+
+    /// Maps name keys to tooltip themes.
+    pub tooltip: HashMap<String, Tooltip>,
 }
