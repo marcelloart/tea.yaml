@@ -13,6 +13,7 @@ use crate::{
     radio::Serial as Radio,
     rule::Serial as Rule,
     scrollable::Serial as Scrollable,
+    slider::Serial as Slider,
     textinput::Serial as TextInput,
 };
 
@@ -68,6 +69,9 @@ pub struct Theme {
 
     /// Maps name keys to scrollable themes.
     pub scrollable: HashMap<String, Scrollable>,
+
+    /// Maps name keys to slider themes.
+    pub slider: HashMap<String, Slider>,
 
     /// Maps name keys to text input themes.
     pub textinput: HashMap<String, TextInput>,
