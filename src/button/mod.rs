@@ -1,4 +1,4 @@
-//! Border theme.
+//! Button theme.
 
 
 
