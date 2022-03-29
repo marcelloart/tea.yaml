@@ -12,4 +12,4 @@ pub use self::serial::{
     TextInputState as StateSerial,
     Component,
 };
-pub use self::style::Theme;
+pub use self::style::{ StateTheme, Theme };
