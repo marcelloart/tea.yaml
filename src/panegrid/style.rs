@@ -86,10 +86,10 @@ impl StyleSheet for Theme {
 #[derive(Clone, Copy, Debug)]
 pub struct LineTheme {
     /// Line color.
-    color: Color,
+    pub color: Color,
 
     /// Line width.
-    width: f32,
+    pub width: f32,
 }
 
 impl LineTheme {

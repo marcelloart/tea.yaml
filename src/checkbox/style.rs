@@ -74,13 +74,13 @@ impl StyleSheet for Theme {
 #[derive(Clone, Copy, Debug)]
 pub struct StateTheme {
     /// Background color.
-    background: Color,
+    pub background: Color,
 
     /// Checkmark color.
-    checkmark: Color,
+    pub checkmark: Color,
 
     /// Border theme.
-    border: Border,
+    pub border: Border,
 }
 
 impl StateTheme {

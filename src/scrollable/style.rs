@@ -87,16 +87,16 @@ impl StyleSheet for Theme {
 #[derive(Clone, Copy, Debug)]
 pub struct StateTheme {
     /// Background color.
-    color: Color,
+    pub color: Color,
 
     /// Border theme.
-    border: Border,
+    pub border: Border,
 
     /// Scroller color.
-    scolor: Color,
+    pub scolor: Color,
 
     /// Scroller border theme.
-    sborder: Border,
+    pub sborder: Border,
 }
 
 impl StateTheme {

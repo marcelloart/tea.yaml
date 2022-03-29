@@ -87,16 +87,16 @@ impl StyleSheet for Theme {
 #[derive(Clone, Copy, Debug)]
 pub struct StateTheme {
     /// Rail colors.
-    colors: (Color, Color),
+    pub colors: (Color, Color),
 
     /// Border of the handle theme.
-    hborder: Border,
+    pub hborder: Border,
 
     /// Color of the handle.
-    hcolor: Color,
+    pub hcolor: Color,
 
     /// Handle shape.
-    shape: HandleShape,
+    pub shape: HandleShape,
 }
 
 impl StateTheme {

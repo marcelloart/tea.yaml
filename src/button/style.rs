@@ -101,13 +101,13 @@ impl StyleSheet for Theme {
 #[derive(Clone, Copy, Debug)]
 pub struct StateTheme {
     /// Background color.
-    background: Color,
+    pub background: Color,
 
     /// Text color.
-    textcolor: Color,
+    pub textcolor: Color,
 
     /// Border theme.
-    border: Border,
+    pub border: Border,
 }
 
 impl StateTheme {

@@ -23,4 +23,5 @@ mod theme;
 
 
 
+pub use self::color::Color;
 pub use self::theme::Theme;
