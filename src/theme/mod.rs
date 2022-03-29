@@ -25,7 +25,7 @@ use std::collections::HashMap;
 
 
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Theme {
     /// Name of this theme.
     /// This can be used to index a set of themes inside a `Hashmap`.
