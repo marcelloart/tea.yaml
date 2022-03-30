@@ -50,7 +50,22 @@ impl Theme {
                 _ => None,
             },
 
-            _ => None,
+            _ => match theme.border.get(&name) {
+                Some(serial) => {
+                    // Destructure the serialized version.
+                    let Serial { color: colorstr, radius, width } = serial;
+
+                    // Get the background color.
+                    let color = match theme.color.get(colorstr) {
+                        Some(c) => *c,
+                        _ => Color::BLACK,
+                    };
+
+                    Some( Theme { color, radius: *radius, width: *width } )
+                },
+
+                _ => None,
+            },
         }
     }
 }
