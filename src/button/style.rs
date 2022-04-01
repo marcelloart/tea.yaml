@@ -39,42 +39,48 @@ impl Theme {
     pub fn extract(theme: &Collection, name: String) -> Option<Self> {
         match theme.styles.get(&name) {
             Some(stylestr) => match theme.button.get(&stylestr.0) {
-                Some(serial) => {
-                    // Destructure the serialized version.
-                    let Serial { active, hovered, pressed, disabled } = serial;
-
-                    // Get the active state theme.
-                    let active = match StateTheme::active(theme, active.clone()) {
-                        Some(t) => t,
-                        _ => StateTheme::DEFAULT,
-                    };
-
-                    // Get the hovered state theme.
-                    let hovered = match StateTheme::hovered(theme, hovered.clone()) {
-                        Some(t) => t,
-                        _ => active.clone(),
-                    };
-
-                    // Get the pressed state theme.
-                    let pressed = match StateTheme::pressed(theme, pressed.clone()) {
-                        Some(t) => t,
-                        _ => active.clone(),
-                    };
-
-                    // Get the disabled state theme.
-                    let disabled = match StateTheme::disabled(theme, disabled.clone()) {
-                        Some(t) => t,
-                        _ => active.clone(),
-                    };
-
-                    Some( Theme { active, hovered, pressed, disabled } )
-                },
+                Some(serial) => Some( Self::build(theme, serial) ),
 
                 _ => None,
             },
 
-            _ => None,
+            _ => match theme.button.get(&name) {
+                Some(serial) => Some( Self::build(theme, serial) ),
+                _ => None,
+            },
         }
+    }
+
+    /// Builds the theme from its serial.
+    fn build(theme: &Collection, serial: &Serial) -> Self {
+        // Destructure the serialized version.
+        let Serial { active, hovered, pressed, disabled } = serial;
+
+        // Get the active state theme.
+        let active = match StateTheme::active(theme, active.clone()) {
+            Some(t) => t,
+            _ => StateTheme::DEFAULT,
+        };
+
+        // Get the hovered state theme.
+        let hovered = match StateTheme::hovered(theme, hovered.clone()) {
+            Some(t) => t,
+            _ => active.clone(),
+        };
+
+        // Get the pressed state theme.
+        let pressed = match StateTheme::pressed(theme, pressed.clone()) {
+            Some(t) => t,
+            _ => active.clone(),
+        };
+
+        // Get the disabled state theme.
+        let disabled = match StateTheme::disabled(theme, disabled.clone()) {
+            Some(t) => t,
+            _ => active.clone(),
+        };
+
+        Theme { active, hovered, pressed, disabled }
     }
 }
 
