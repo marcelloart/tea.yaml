@@ -63,7 +63,34 @@ impl Theme {
                 _ => None,
             },
 
-            _ => None,
+            _ => match theme.scrollable.get(&name) {
+                Some(serial) => {
+                    // Destructure the serialized version.
+                    let Serial { active, hovered, dragging } = serial;
+
+                    // Get the active state theme.
+                    let active = match StateTheme::active(theme, active.clone()) {
+                        Some(t) => t,
+                        _ => StateTheme::DEFAULT,
+                    };
+
+                    // Get the hovered state theme.
+                    let hovered = match StateTheme::hovered(theme, hovered.clone()) {
+                        Some(t) => t,
+                        _ => active.clone(),
+                    };
+
+                    // Get the dragging state theme.
+                    let dragging = match StateTheme::dragging(theme, dragging.clone()) {
+                        Some(t) => t,
+                        _ => hovered.clone(),
+                    };
+
+                    Some( Theme { active, hovered, dragging } )
+                },
+
+                _ => None,
+            },
         }
     }
 }
