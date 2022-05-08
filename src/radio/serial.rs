@@ -23,6 +23,9 @@ pub struct RadioState {
     /// Key to the dot color.
     pub dotcolor: String,
 
+    /// Key to the text color.
+    pub textcolor: Option<String>,
+
     /// Key to the border theme.
     pub border: String,
 }

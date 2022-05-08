@@ -18,8 +18,11 @@ impl Color {
     /// Default color black.
     pub const BLACK: Color = Color(0, 0, 0, 1.0);
 
-    /// Default color white.
+    /// Default color red.
     pub const RED: Color = Color(255, 0, 0, 1.0);
+
+    /// Default color blue.
+    pub const BLUE: Color = Color(0, 0, 255, 1.0);
 
     /// Default color white.
     pub const WHITE: Color = Color(255, 255, 255, 1.0);

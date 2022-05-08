@@ -26,6 +26,9 @@ pub struct PicklistState {
     /// Key to the text color.
     pub textcolor: String,
 
+    /// Key to the placeholder color.
+    pub placeholdercolor: String,
+
     /// Key to the border theme.
     pub border: String,
 

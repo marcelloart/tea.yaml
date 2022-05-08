@@ -23,6 +23,9 @@ pub struct CheckboxState {
     /// Key to the checkmark color.
     pub checkmark: String,
 
+    /// Key to the text color.
+    pub textcolor: Option<String>,
+
     /// Key to the border theme.
     pub border: String,
 }

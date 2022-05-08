@@ -21,10 +21,10 @@ use super::{ Component, Serial, StateSerial };
 #[derive(Clone, Copy, Debug)]
 pub struct Theme {
     /// Active state.
-    pub active: StateTheme,
+    pub active: Style,
 
     /// Hovered state.
-    pub hovered: StateTheme,
+    pub hovered: Style,
 }
 
 impl Theme {
@@ -37,13 +37,20 @@ impl Theme {
                     let Serial { active, hovered } = serial;
 
                     // Get the active state theme.
-                    let active = match StateTheme::active(theme, active.clone()) {
+                    let active = match Self::active(theme, active.clone()) {
                         Some(t) => t,
-                        _ => StateTheme::DEFAULT,
+                        _ => Style {
+                            background: iced::Color::WHITE.into(),
+                            checkmark_color: iced::Color::from_rgb8(255, 0, 0),
+                            border_radius: 0.0,
+                            border_width: 0.0,
+                            border_color: iced::Color::BLACK,
+                            text_color: None,
+                        },
                     };
 
                     // Get the hovered state theme.
-                    let hovered = match StateTheme::hovered(theme, hovered.clone()) {
+                    let hovered = match Self::hovered(theme, hovered.clone()) {
                         Some(t) => t,
                         _ => active.clone(),
                     };
@@ -57,101 +64,99 @@ impl Theme {
             _ => None,
         }
     }
-}
 
-impl StyleSheet for Theme {
-    fn active(&self, checked: bool) -> Style {
-        self.active.style(checked)
-    }
-
-    fn hovered(&self, checked: bool) -> Style {
-        self.hovered.style(checked)
-    }
-}
-
-
-
-#[derive(Clone, Copy, Debug)]
-pub struct StateTheme {
-    /// Background color.
-    pub background: Color,
-
-    /// Checkmark color.
-    pub checkmark: Color,
-
-    /// Border theme.
-    pub border: Border,
-}
-
-impl StateTheme {
-    /// Default state theme.
-    pub const DEFAULT: StateTheme = StateTheme { background: Color::WHITE, checkmark: Color::RED, border: Border::DEFAULT };
-
-    /// Gets the `StateTheme` from a defined serial.
-    pub(self) fn defined(theme: &Collection, serial: StateSerial) -> Self {
-        // Destructure the serial.
-        let StateSerial { background, checkmark, border } = serial;
-
-        // Get the background color.
-        let background = match theme.color.get(&background) {
-            Some(c) => *c,
-            _ => Color::WHITE,
-        };
-
-        // Get the checkmark color.
-        let checkmark = match theme.color.get(&checkmark) {
-            Some(c) => *c,
-            _ => Color::RED,
-        };
-
-        // Get the border theme.
-        let border = match Border::extract(theme, border) {
-            Some(b) => b,
-            _ => Border::DEFAULT,
-        };
-
-        StateTheme { background, checkmark, border }
-    }
-
-    /// Gets the `StateTheme` from the active component.
-    pub(self) fn active(theme: &Collection, component: Component) -> Option<Self> {
+    /// Creates or inherits the active `Style`.
+    fn active(theme: &Collection, component: Component) -> Option<Style> {
         match component {
-            Component::Defined(serial) => Some( Self::defined(theme, serial) ),
+            Component::Defined(serial) => Some( Self::style(theme, serial) ),
 
             Component::Inherited(name) => match Theme::extract(theme, name) {
                 Some(checkbox) => Some( checkbox.active.clone() ),
                 _ => None,
             },
 
-            Component::None => None,
+            _ => None,
         }
     }
 
-    /// Gets the `StateTheme` from the hovered component.
-    pub(self) fn hovered(theme: &Collection, component: Component) -> Option<Self> {
+    /// Creates or inherits the hovered `Style`.
+    fn hovered(theme: &Collection, component: Component) -> Option<Style> {
         match component {
-            Component::Defined(serial) => Some( Self::defined(theme, serial) ),
+            Component::Defined(serial) => Some( Self::style(theme, serial) ),
 
             Component::Inherited(name) => match Theme::extract(theme, name) {
                 Some(checkbox) => Some( checkbox.hovered.clone() ),
                 _ => None,
             },
 
-            Component::None => None,
+            _ => None,
         }
     }
 
-    /// Converts into a style.
-    pub(self) fn style(&self, checked: bool) -> Style {
-        let checkmark_color = if checked { self.checkmark.into() }
-            else { iced::Color::from_rgba(0.0, 0.0, 0.0, 0.0) };
+    /// Attempts to create a `Style` from the given serial style.
+    fn style(theme: &Collection, serial: StateSerial) -> Style {
+        // Destructure the serial.
+        let StateSerial { background, checkmark, textcolor, border } = serial;
+
+        // Get the background color.
+        let background = match theme.color.get(&background) {
+            Some(c) => (*c).into(),
+            _ => Color::WHITE.into(),
+        };
+
+        // Get the checkmark color.
+        let checkmark_color = match theme.color.get(&checkmark) {
+            Some(c) => (*c).into(),
+            _ => Color::BLACK.into(),
+        };
+
+        // Get the text color.
+        let text_color = match textcolor {
+            Some(s) => match theme.color.get(&s) {
+                Some(c) => Some((*c).into()),
+                _ => None,
+            },
+            _ => None,
+        };
+
+        // Get the border theme.
+        let (border_color, border_radius, border_width) = match Border::extract(theme, border) {
+            Some(b) => (b.color.into(), b.radius, b.width),
+            _ => {
+                let b = Border::DEFAULT;
+                (b.color.into(), b.radius, b.width)
+            },
+        };
 
         Style {
-            background: self.background.into(),
-            border_color: self.border.color.into(),
-            border_radius: self.border.radius,
-            border_width: self.border.width,
+            background,
             checkmark_color,
+            border_radius,
+            border_width,
+            border_color,
+            text_color,
         }
+    }
+}
+
+impl StyleSheet for Theme {
+    fn active(&self, checked: bool) -> Style {
+        if checked {
+            return self.active;
+        }
+
+        let mut unchecked = self.active.clone();
+        unchecked.checkmark_color = iced::Color::from_rgba(0.0, 0.0, 0.0, 0.0);
+        unchecked
+    }
+
+    fn hovered(&self, checked: bool) -> Style {
+        if checked {
+            return self.hovered;
+        }
+
+        let mut unchecked = self.hovered.clone();
+        unchecked.checkmark_color = iced::Color::from_rgba(0.0, 0.0, 0.0, 0.0);
+        unchecked
     }
 }

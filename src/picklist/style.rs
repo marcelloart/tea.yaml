@@ -36,6 +36,8 @@ impl Theme {
         background: iced::Background::Color( iced::Color::WHITE ),
         text_color: iced::Color::BLACK,
 
+        placeholder_color: iced::Color::BLACK,
+
         border_color: iced::Color::BLACK,
         border_radius: 0.0,
         border_width: 1.0,
@@ -185,7 +187,7 @@ impl Theme {
     /// Attempts to create a `Style` from the given serial style.
     pub fn style(theme: &Collection, serial: StateSerial) -> Style {
         // Destructure the serial.
-        let StateSerial { background, textcolor, border, iconsize } = serial;
+        let StateSerial { background, placeholdercolor, textcolor, border, iconsize } = serial;
 
         // Get the background color.
         let background = match theme.color.get(&background) {
@@ -195,6 +197,12 @@ impl Theme {
 
         // Get the text color.
         let text_color = match theme.color.get(&textcolor) {
+            Some(c) => (*c).into(),
+            _ => Color::BLACK.into(),
+        };
+
+        // Get the placeholder color.
+        let placeholder_color = match theme.color.get(&placeholdercolor) {
             Some(c) => (*c).into(),
             _ => Color::BLACK.into(),
         };
@@ -213,6 +221,8 @@ impl Theme {
         Style {
             background,
             text_color,
+
+            placeholder_color,
 
             border_color,
             border_radius,

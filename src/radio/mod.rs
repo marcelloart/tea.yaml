@@ -13,4 +13,4 @@ pub use self::serial::{
     Component,
 };
 
-pub use self::style::{ StateTheme, Theme };
+pub use self::style::{ Theme };

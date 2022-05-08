@@ -21,10 +21,10 @@ use super::{ Component, Serial, StateSerial };
 #[derive(Clone, Copy, Debug)]
 pub struct Theme {
     /// Active state.
-    pub active: StateTheme,
+    pub active: Style,
 
     /// Hovered state.
-    pub hovered: StateTheme,
+    pub hovered: Style,
 }
 
 impl Theme {
@@ -37,13 +37,19 @@ impl Theme {
                     let Serial { active, hovered } = serial;
 
                     // Get the active state theme.
-                    let active = match StateTheme::active(theme, active.clone()) {
+                    let active = match Self::active(theme, active.clone()) {
                         Some(t) => t,
-                        _ => StateTheme::DEFAULT,
+                        _ => Style {
+                            background: Color::WHITE.into(),
+                            dot_color: Color::RED.into(),
+                            text_color: None,
+                            border_color: Color::BLACK.into(),
+                            border_width: 1.0,
+                        },
                     };
 
                     // Get the hovered state theme.
-                    let hovered = match StateTheme::hovered(theme, hovered.clone()) {
+                    let hovered = match Self::hovered(theme, hovered.clone()) {
                         Some(t) => t,
                         _ => active.clone(),
                     };
@@ -57,98 +63,78 @@ impl Theme {
             _ => None,
         }
     }
+
+    /// Creates or inherits the active style.
+    fn active(theme: &Collection, component: Component) -> Option<Style> {
+        match component {
+            Component::Defined(serial) => Some( Self::style(theme, serial) ),
+            Component::Inherited(name) => match Theme::extract( theme, name ) {
+                Some(radio) => Some( radio.active.clone() ),
+                _ => None,
+            },
+            _ => None,
+        }
+    }
+
+    /// Creates or inherits the hovered style.
+    fn hovered(theme: &Collection, component: Component) -> Option<Style> {
+        match component {
+            Component::Defined(serial) => Some( Self::style(theme, serial) ),
+            Component::Inherited(name) => match Theme::extract( theme, name ) {
+                Some(radio) => Some( radio.hovered.clone() ),
+                _ => None,
+            },
+            _ => None,
+        }
+    }
+
+    /// Attempts to create a `Style` from the given serial style.
+    fn style(theme: &Collection, serial: StateSerial) -> Style {
+        // Destructure the serial.
+        let StateSerial { background, dotcolor, textcolor, border } = serial;
+
+        // Get the background color.
+        let background = match theme.color.get(&background) {
+            Some(c) => (*c).into(),
+            _ => Color::WHITE.into(),
+        };
+
+        // Get the dot color.
+        let dot_color = match theme.color.get(&dotcolor) {
+            Some(c) => (*c).into(),
+            _ => Color::RED.into(),
+        };
+
+        // Get the text color.
+        let text_color = match textcolor {
+            Some(name) => match theme.color.get(&name) {
+                Some(c) => Some((*c).into()),
+                _ => None,
+            },
+            _ => None,
+        };
+
+        // Get the border theme.
+        let (border_color, _, border_width) = match Border::extract(theme, border) {
+            Some(b) => {
+                (b.color.into(), b.radius, b.width)
+            },
+            _ => {
+                let b = Border::DEFAULT;
+                (b.color.into(), b.radius, b.width)
+            },
+        };
+
+        Style { background, dot_color, text_color, border_width, border_color }
+    }
 }
 
 impl StyleSheet for Theme {
     fn active(&self) -> Style {
-        self.active.into()
+        self.active.clone()
     }
 
     fn hovered(&self) -> Style {
-        self.hovered.into()
-    }
-}
-
-
-
-#[derive(Clone, Copy, Debug)]
-pub struct StateTheme {
-    /// Background color.
-    pub background: Color,
-
-    /// Dot color.
-    pub dotcolor: Color,
-
-    /// Border theme.
-    pub border: Border,
-}
-
-impl StateTheme {
-    /// Default state theme.
-    pub const DEFAULT: StateTheme = StateTheme { background: Color::WHITE, dotcolor: Color::BLACK, border: Border::DEFAULT };
-
-    /// Gets the `StateTheme` from a defined serial.
-    pub(self) fn defined(theme: &Collection, serial: StateSerial) -> Self {
-        // Destructure the serial.
-        let StateSerial { background, dotcolor, border } = serial;
-
-        // Get the background color.
-        let background = match theme.color.get(&background) {
-            Some(c) => *c,
-            _ => Color::WHITE,
-        };
-
-        // Get the dot color.
-        let dotcolor = match theme.color.get(&dotcolor) {
-            Some(c) => *c,
-            _ => Color::RED,
-        };
-
-        // Get the border theme.
-        let border = match Border::extract(theme, border) {
-            Some(b) => b,
-            _ => Border::DEFAULT,
-        };
-
-        StateTheme { background, dotcolor, border }
-    }
-
-    /// Gets the `StateTheme` from the active component.
-    pub(self) fn active(theme: &Collection, component: Component) -> Option<Self> {
-        match component {
-            Component::Defined(serial) => Some( Self::defined(theme, serial) ),
-
-            Component::Inherited(name) => match Theme::extract(theme, name) {
-                Some(radio) => Some( radio.active.clone() ),
-                _ => None,
-            },
-
-            Component::None => None,
-        }
-    }
-
-    /// Gets the `StateTheme` from the hovered component.
-    pub(self) fn hovered(theme: &Collection, component: Component) -> Option<Self> {
-        match component {
-            Component::Defined(serial) => Some( Self::defined(theme, serial) ),
-
-            Component::Inherited(name) => match Theme::extract(theme, name) {
-                Some(radio) => Some( radio.hovered.clone() ),
-                _ => None,
-            },
-
-            Component::None => None,
-        }
-    }
-}
-
-impl core::convert::Into<Style> for StateTheme {
-    fn into(self) -> Style {
-        Style {
-            background: self.background.into(),
-            border_color: self.border.color.into(),
-            border_width: self.border.width,
-            dot_color: self.dotcolor.into(),
-        }
+        self.hovered.clone()
     }
 }
