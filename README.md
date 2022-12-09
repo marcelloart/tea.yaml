@@ -53,6 +53,15 @@ This file is used for theme modification and UI/UX.
 ```font/``` is the folder which contains all the fonts used by the theme.
 
 
+## WIP
+
+See below a list of widgets that do not implement a theme yet.
+
+ - `Checkbox`
+ - `Radio`
+ - `Rule`
+ - `Slider`
+
 
 ## License
 `marcel` is licensed under the terms of both MIT license and Mozilla Public License (Version 2.0).
