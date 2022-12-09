@@ -55,6 +55,6 @@ This file is used for theme modification and UI/UX.
 
 
 ## License
-`marcel` is licensed under the terms of both MIT license and Apache License (Version 2.0).
+`marcel` is licensed under the terms of both MIT license and Mozilla Public License (Version 2.0).
 
-See [LICENSE-MIT] and [LICENSE-APACHE] for details.
+See [LICENSE-MIT](https://github.com/micro-rust/marcel/blob/main/LICENSE-MIT) and [LICENSE-MPL2](https://github.com/micro-rust/marcel/blob/main/LICENSE-MPL2) for details.
