@@ -8,7 +8,7 @@ edition = "2021"
 readme = "README.md"
 repository = "https://github.com/micro-rust/marcel"
 
-license = "MIT OR Apache-2.0"
+license = "MIT OR MPL-2.0"
 
 categories = ["database", "data-structures", "graphics", "gui"]
 keywords = ["gui", "theme", "graphics", "application"]
