@@ -7,7 +7,7 @@ use serde::{ Deserialize, Serialize };
 
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct Scrollbar {
+pub struct Scrollable {
     /// Active state.
     pub active: Component,
 
@@ -19,7 +19,7 @@ pub struct Scrollbar {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct ScrollbarState {
+pub struct State {
     /// Key to the background color.
     pub color: String,
 
@@ -37,10 +37,10 @@ pub struct ScrollbarState {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum Component {
     /// The button state is defined.
-    Defined(ScrollbarState),
+    Defined( State ),
 
     /// The button state is inherited from another button theme.
-    Inherited(String),
+    Inherited( String ),
 
     /// The button state is not defined.
     None,

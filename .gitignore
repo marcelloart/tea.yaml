@@ -1,3 +1,9 @@
 Cargo.lock
 
 /target
+
+# Testing
+*.theme
+*tests
+*test
+*.ron

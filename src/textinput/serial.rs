@@ -17,12 +17,18 @@ pub struct TextInput {
     /// Focused state.
     pub focused: Component,
 
-    /// Colors of the theme.
-    pub colors: [String; 3],
+    /// Placeholder color.
+    pub placeholder: String,
+
+    /// Value color.
+    pub value: String,
+
+    /// Selection color.
+    pub selection: String,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct TextInputState {
+pub struct State {
     /// Key to the background color.
     pub background: String,
 
@@ -34,10 +40,10 @@ pub struct TextInputState {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum Component {
     /// The button state is defined.
-    Defined(TextInputState),
+    Defined( State ),
 
     /// The button state is inherited from another button theme.
-    Inherited(String),
+    Inherited( String ),
 
     /// The button state is not defined.
     None,

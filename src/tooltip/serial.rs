@@ -12,7 +12,7 @@ pub struct Tooltip {
     pub background: String,
 
     /// Key to the text color.
-    pub textcolor: String,
+    pub text: String,
 
     /// Key to the border definition.
     pub border: String,

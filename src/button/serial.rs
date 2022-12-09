@@ -1,47 +1,52 @@
-//! `serde` compatible version of the button theme.
+//! Serial Button theme.
 
 
 
-use serde::{ Deserialize, Serialize };
+use serde::{
+    Deserialize, Serialize,
+};
 
 
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Button {
     /// Active state.
-    pub active: Component,
+    pub(super) active: Component,
 
     /// Hovered state.
-    pub hovered: Component,
+    pub(super) hovered: Component,
 
     /// Pressed state.
-    pub pressed: Component,
+    pub(super) pressed: Component,
 
     /// Disabled state.
-    pub disabled: Component,
+    pub(super) disabled: Component,
 }
 
+
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct ButtonState {
+pub struct State {
     /// Key to the background color.
-    pub background: String,
+    pub(super) background: String,
 
     /// Key to the text color.
-    pub textcolor: String,
+    pub(super) text: String,
 
     /// Key to the border theme.
-    pub border: String,
+    pub(super) border: String,
 }
 
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum Component {
-    /// The button state is defined.
-    Defined(ButtonState),
+    /// The theme is defined.
+    Defined( State ),
 
-    /// The button state is inherited from another button theme.
-    Inherited(String),
+    /// The button state is inherited from another theme.
+    Inherited( String ),
 
-    /// The button state is not defined.
+    /// The theme is not defined.
     None,
 }

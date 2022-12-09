@@ -19,15 +19,15 @@ pub struct Picklist {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct PicklistState {
+pub struct State {
     /// Key to the background color.
     pub background: String,
 
     /// Key to the text color.
-    pub textcolor: String,
+    pub text: String,
 
     /// Key to the placeholder color.
-    pub placeholdercolor: String,
+    pub placeholder: String,
 
     /// Key to the border theme.
     pub border: String,
@@ -42,7 +42,7 @@ pub struct Menu {
     pub background: String,
 
     /// Key to the text color.
-    pub textcolor: String,
+    pub text: String,
 
     /// Key to the border theme.
     pub border: String,
@@ -51,17 +51,17 @@ pub struct Menu {
     pub sbackground: String,
 
     /// Key to the selected text color.
-    pub stextcolor: String,
+    pub stext: String,
 }
 
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum StateComponent {
     /// The button state is defined.
-    Defined(PicklistState),
+    Defined( State ),
 
     /// The button state is inherited from another button theme.
-    Inherited(String),
+    Inherited( String ),
 
     /// The button state is not defined.
     None,
@@ -70,11 +70,8 @@ pub enum StateComponent {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub enum MenuComponent {
     /// The button state is defined.
-    Defined(Menu),
+    Defined( Menu ),
 
     /// The button state is inherited from another button theme.
-    Inherited(String),
-
-    /// The button state is not defined.
-    None,
+    Inherited( String ),
 }

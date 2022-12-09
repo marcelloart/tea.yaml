@@ -1,11 +1,6 @@
-//! Color theme.
+//! Serialized color.
 
 
-
-use iced::{
-    Background as IcedBackground,
-    Color as IcedColor,
-};
 
 use serde::{ Deserialize, Serialize };
 
@@ -28,16 +23,22 @@ impl Color {
     pub const WHITE: Color = Color(255, 255, 255, 1.0);
 }
 
-impl Into<IcedColor> for Color {
-    fn into(self) -> IcedColor {
+impl Into<iced::Color> for Color {
+    fn into(self) -> iced::Color {
         let Color(r, g, b, a) = self;
 
-        IcedColor::from_rgba8(r, g, b, a)
+        iced::Color::from_rgba8(r, g, b, a)
     }
 }
 
-impl Into<IcedBackground> for Color {
-    fn into(self) -> IcedBackground {
-        IcedBackground::Color(self.into())
+impl Into<iced::Background> for Color {
+    fn into(self) -> iced::Background {
+        iced::Background::Color(self.into())
+    }
+}
+
+impl core::fmt::Display for Color {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        f.write_str( &format!("R: {:>3} | G: {:>3} | B: {:>3} | A: {:.3}", self.0, self.1, self.2, self.3) )
     }
 }
