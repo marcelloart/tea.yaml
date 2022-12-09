@@ -2,7 +2,7 @@
 name = "marcel"
 description = "Dynamic theme library for the iced GUI framework"
 
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 readme = "README.md"
