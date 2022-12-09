@@ -15,6 +15,13 @@ keywords = ["gui", "theme", "graphics", "application"]
 
 publish = true
 
+exclude = [
+    "src/checkbox",
+    "src/radio",
+    "src/rule",
+    "src/slider",
+]
+
 
 
 [dependencies]
