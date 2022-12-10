@@ -17,6 +17,45 @@ Add this to you `Cargo.toml`
 [dependencies]
 marcel = "0.1"
 ```
+
+See below for a way to load a theme into your application.
+
+```rust
+use marcel::{
+    theme::{
+        Theme,
+        serial::Theme as Serial,
+    },
+};
+
+use std::{
+    io::Read,
+    fs::File,
+    path::PathBuf,
+};
+
+fn main() {
+    // Buffer to hold the file contents.
+    let mut buffer = Vec::new();
+
+    // Open the file and read its contents.
+    // Replace '.xxx' with the extension of your file format.
+    let mut file = File::open( PathBuf::from("theme.xxx") ).unwrap();
+    file.read_to_end(&mut buffer);
+
+    // String to transform to UTF8.
+    let string = String::from_utf8(buffer).unwrap();
+
+    // Deserialize.
+    // format is the serde compatible format crate (e.g. serde_json)
+    let serial: Serial = <format>::from_str(&string).unwrap();
+
+    // Tranform into a theme.
+    let mut theme = Theme::new();
+    theme.parse(&serial).unwrap();
+}
+```
+
 To get started check out the Github [wiki](https://github.com/micro-rust/marcel/wiki).
 
 
@@ -150,6 +189,13 @@ This file is used for theme modification and UI/UX.
 
 
 ## WIP
+
+See below a list of features that are not implemented yet.
+
+ - Packaged themes
+ - Metadata
+ - Images
+ - Fonts
 
 See below a list of widgets that do not implement a theme yet.
 
