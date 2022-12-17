@@ -2,13 +2,17 @@
 
 
 
-pub(crate) mod serial;
+pub mod serial;
 
 
 
 use crate::*;
 
-use std::collections::HashMap;
+use std::{
+    collections::{
+        HashMap,
+    },
+};
 
 
 

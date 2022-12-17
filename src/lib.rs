@@ -21,7 +21,7 @@ mod tooltip;
 
 mod serial;
 
-mod theme;
+pub mod theme;
 
 
 
