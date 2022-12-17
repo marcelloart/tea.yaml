@@ -37,6 +37,18 @@ impl Into<iced::Color> for &Color {
     }
 }
 
+impl Into<iced::theme::Text> for Color {
+    fn into(self) -> iced::theme::Text {
+        iced::theme::Text::Color(self.into())
+    }
+}
+
+impl Into<iced::theme::Text> for &Color {
+    fn into(self) -> iced::theme::Text {
+        iced::theme::Text::Color(self.into())
+    }
+}
+
 impl Into<iced::Background> for Color {
     fn into(self) -> iced::Background {
         iced::Background::Color(self.into())

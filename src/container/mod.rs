@@ -46,6 +46,12 @@ impl Container {
     }
 }
 
+impl Into<iced::theme::Container> for Container {
+    fn into(self) -> iced::theme::Container {
+        iced::theme::Container::Custom( Box::new(self) )
+    }
+}
+
 impl StyleSheet for Container {
     type Style = iced::Theme;
 
