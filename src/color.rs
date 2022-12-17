@@ -31,14 +31,40 @@ impl Into<iced::Color> for Color {
     }
 }
 
+impl Into<iced::Color> for &Color {
+    fn into(self) -> iced::Color {
+        iced::Color::from_rgba8(self.0, self.1, self.2, self.3)
+    }
+}
+
 impl Into<iced::Background> for Color {
     fn into(self) -> iced::Background {
         iced::Background::Color(self.into())
     }
 }
 
+impl Into<iced::Background> for &Color {
+    fn into(self) -> iced::Background {
+        iced::Background::Color(self.into())
+    }
+}
+
+impl iced_native::widget::text::StyleSheet for Color {
+    type Style = Self;
+
+    fn appearance(&self, _: Self::Style) -> iced::widget::text::Appearance {
+        iced::widget::text::Appearance { color: Some( self.into() ) }
+    }
+}
+
 impl core::fmt::Display for Color {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         f.write_str( &format!("R: {:>3} | G: {:>3} | B: {:>3} | A: {:.3}", self.0, self.1, self.2, self.3) )
+    }
+}
+
+impl Default for Color {
+    fn default() -> Self {
+        Color(0, 0, 0, 1.0)
     }
 }

@@ -18,6 +18,8 @@ Add this to you `Cargo.toml`
 marcel = "0.1"
 ```
 
+WARNING: `marcel v0.1` is compatible with `iced v0.6.0` and `iced_native v0.7` and with `serde v1`.
+
 See below for a way to load a theme into your application.
 
 ```rust
@@ -204,6 +206,13 @@ See below a list of widgets that do not implement a theme yet.
  - `Rule`
  - `Slider`
 
+
+## Dependencies
+See below a list of dependencies of this crate.
+
+ - iced: 0.6.0
+ - iced_native: 0.7
+ - serde: 1 (feaures = [derive])
 
 ## License
 `marcel` is licensed under the terms of both MIT license and Mozilla Public License (Version 2.0).
