@@ -93,7 +93,7 @@ impl StyleSheet for Picklist {
             border_radius: self.state[0].border.radius,
             border_width: self.state[0].border.width,
             border_color: self.state[0].border.color.into(),
-            icon_size: self.state[0].iconsize,
+            //icon_size: self.state[0].iconsize,
         }
     }
 
@@ -105,7 +105,7 @@ impl StyleSheet for Picklist {
             border_radius: self.state[1].border.radius,
             border_width: self.state[1].border.width,
             border_color: self.state[1].border.color.into(),
-            icon_size: self.state[1].iconsize,
+            //icon_size: self.state[1].iconsize,
         }
     }
 }
