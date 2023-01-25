@@ -259,7 +259,7 @@ impl core::fmt::Display for Theme {
                 string += &format!("| | | |- Background:        {}\n", picklist.state[state].background);
                 string += &format!("| | | |- Text color:        {}\n", picklist.state[state].text);
                 string += &format!("| | | |- Placeholder color: {}\n", picklist.state[state].placeholder);
-                string += &format!("| | | |- Icon size: {}\n", picklist.state[state].iconsize);
+                string += &format!("| | | |- Handle color     : {}\n", picklist.state[state].handle);
                 string +=          "| | | |- Border:\n";
                 string += &format!("| | |   |- Color: {}\n", picklist.state[state].border.color);
                 string += &format!("| | |   |- Radius: {:.3}\n", picklist.state[state].border.radius);
