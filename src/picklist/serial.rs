@@ -32,8 +32,8 @@ pub struct State {
     /// Key to the border theme.
     pub border: String,
 
-    /// Icon size.
-    pub iconsize: f32,
+    /// Handle color.
+    pub handle: String,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

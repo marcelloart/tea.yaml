@@ -93,7 +93,7 @@ impl StyleSheet for Picklist {
             border_radius: self.state[0].border.radius,
             border_width: self.state[0].border.width,
             border_color: self.state[0].border.color.into(),
-            //icon_size: self.state[0].iconsize,
+            handle_color: self.state[0].handle.into(),
         }
     }
 
@@ -105,7 +105,7 @@ impl StyleSheet for Picklist {
             border_radius: self.state[1].border.radius,
             border_width: self.state[1].border.width,
             border_color: self.state[1].border.color.into(),
-            //icon_size: self.state[1].iconsize,
+            handle_color: self.state[1].handle.into(),
         }
     }
 }
@@ -126,8 +126,8 @@ pub struct State {
     /// Border theme.
     pub border: Border,
 
-    /// Icon size.
-    pub iconsize: f32,
+    /// Handle color.
+    pub handle: Color,
 }
 
 impl State {
@@ -157,7 +157,12 @@ impl State {
             _ => return Err(()),
         };
 
-        Ok( State { background, text, placeholder, border, iconsize: serial.iconsize } )
+        let handle = match theme.color.get(&serial.handle) {
+            Some(color) => *color,
+            _ => return Err(()),
+        };
+
+        Ok( State { background, text, placeholder, border, handle } )
     }
 }
 
