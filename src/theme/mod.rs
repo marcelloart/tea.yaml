@@ -12,6 +12,9 @@ use std::{
     collections::{
         HashMap,
     },
+    sync::{
+        Arc,
+    },
 };
 
 
@@ -27,34 +30,34 @@ pub struct Theme {
     pub description: String,
 
     /// Maps name keys to border themes.
-    pub border: HashMap<String, Border>,
+    pub border: HashMap<String, Arc<Border>>,
 
     // Maps name keys to button themes.
-    pub button: HashMap<String, Button>,
+    pub button: HashMap<String, Arc<Button>>,
 
     /// Maps name keys to colors.
-    pub color: HashMap<String, Color>,
+    pub color: HashMap<String, Arc<Color>>,
 
     /// Maps name keys to container themes.
-    pub container: HashMap<String, Container>,
+    pub container: HashMap<String, Arc<Container>>,
 
     /// Maps name keys to panegrid themes.
-    pub panegrid: HashMap<String, PaneGrid>,
+    pub panegrid: HashMap<String, Arc<PaneGrid>>,
 
     /// Maps name keys to picklist themes.
-    pub picklist: HashMap<String, Picklist>,
+    pub picklist: HashMap<String, Arc<Picklist>>,
 
     /// Maps name keys to progress bar themes.
-    pub progressbar: HashMap<String, ProgressBar>,
+    pub progressbar: HashMap<String, Arc<ProgressBar>>,
 
     /// Maps name keys to scrollable themes.
-    pub scrollable: HashMap<String, Scrollable>,
+    pub scrollable: HashMap<String, Arc<Scrollable>>,
 
     /// Maps name keys to text input themes.
-    pub textinput: HashMap<String, TextInput>,
+    pub textinput: HashMap<String, Arc<TextInput>>,
 
     /// Maps name keys to tooltip themes.
-    pub tooltip: HashMap<String, Tooltip>,
+    pub tooltip: HashMap<String, Arc<Tooltip>>,
 }
 
 impl Theme {
@@ -96,7 +99,7 @@ impl Theme {
         // Deserialize the borders, as they only depend on colors.
         for (name, serial) in &theme.border {
             match Border::create( serial, &self ) {
-                Ok(b) => { self.border.insert( name.clone(), b ); },
+                Ok(b) => { self.border.insert( name.clone(), Arc::new(b) ); },
                 Err(_) => failed += 1,
             }
         }
@@ -104,7 +107,7 @@ impl Theme {
         // Deserialize the progress bars, as they only depend on colors.
         for (name, serial) in &theme.progressbar {
             match ProgressBar::create( serial, &self ) {
-                Ok(p) => { self.progressbar.insert( name.clone(), p ); },
+                Ok(p) => { self.progressbar.insert( name.clone(), Arc::new(p) ); },
                 Err(_) => failed += 1,
             }
         }
@@ -112,7 +115,7 @@ impl Theme {
         // Deserialize the containers, as they only depend on colors and borders.
         for (name, serial) in &theme.container {
             match Container::create( serial, &self ) {
-                Ok(c) => { self.container.insert( name.clone(), c ); },
+                Ok(c) => { self.container.insert( name.clone(), Arc::new(c) ); },
                 Err(_) => failed += 1,
             }
         }
@@ -120,7 +123,7 @@ impl Theme {
         // Deserialize the tooltips, as they only depend on colors and borders.
         for (name, serial) in &theme.tooltip {
             match Tooltip::create( serial, &self ) {
-                Ok(c) => { self.tooltip.insert( name.clone(), c ); },
+                Ok(c) => { self.tooltip.insert( name.clone(), Arc::new(c) ); },
                 Err(_) => failed += 1,
             }
         }
@@ -132,7 +135,7 @@ impl Theme {
             // Deserialize the buttons.
             for (name, serial) in &theme.button {
                 match Button::create( serial, &self ) {
-                    Ok(b) => { self.button.insert( name.clone(), b ); },
+                    Ok(b) => { self.button.insert( name.clone(), Arc::new(b) ); },
                     Err(_) => failed += 1,
                 }
             }
@@ -140,7 +143,7 @@ impl Theme {
             // Deserialize the picklists.
             for (name, serial) in &theme.panegrid {
                 match PaneGrid::create( serial, &self ) {
-                    Ok(p) => { self.panegrid.insert( name.clone(), p ); },
+                    Ok(p) => { self.panegrid.insert( name.clone(), Arc::new(p) ); },
                     Err(_) => failed += 1,
                 }
             }
@@ -148,7 +151,7 @@ impl Theme {
             // Deserialize the picklists.
             for (name, serial) in &theme.picklist {
                 match Picklist::create( serial, &self ) {
-                    Ok(p) => { self.picklist.insert( name.clone(), p ); },
+                    Ok(p) => { self.picklist.insert( name.clone(), Arc::new(p) ); },
                     Err(_) => failed += 1,
                 }
             }
@@ -156,7 +159,7 @@ impl Theme {
             // Deserialize the scrollables.
             for (name, serial) in &theme.scrollable {
                 match Scrollable::create( serial, &self ) {
-                    Ok(s) => { self.scrollable.insert( name.clone(), s ); },
+                    Ok(s) => { self.scrollable.insert( name.clone(), Arc::new(s) ); },
                     Err(_) => failed += 1,
                 }
             }
@@ -164,7 +167,7 @@ impl Theme {
             // Deserialize the text inputs.
             for (name, serial) in &theme.textinput {
                 match TextInput::create( serial, &self ) {
-                    Ok(t) => { self.textinput.insert( name.clone(), t ); },
+                    Ok(t) => { self.textinput.insert( name.clone(), Arc::new(t) ); },
                     Err(_) => failed += 1,
                 }
             }
