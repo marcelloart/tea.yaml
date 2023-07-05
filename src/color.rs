@@ -23,19 +23,7 @@ impl Color {
     pub const WHITE: Color = Color(255, 255, 255, 1.0);
 }
 
-impl Into<iced_native::Color> for Color {
-    fn into(self) -> iced_native::Color {
-        let Color(r, g, b, a) = self;
 
-        iced_native::Color::from_rgba8(r, g, b, a)
-    }
-}
-
-impl Into<iced_native::Color> for &Color {
-    fn into(self) -> iced_native::Color {
-        iced_native::Color::from_rgba8(self.0, self.1, self.2, self.3)
-    }
-}
 
 impl Into<iced::Color> for Color {
     fn into(self) -> iced::Color {
@@ -60,18 +48,6 @@ impl Into<iced::theme::Text> for Color {
 impl Into<iced::theme::Text> for &Color {
     fn into(self) -> iced::theme::Text {
         iced::theme::Text::Color(self.into())
-    }
-}
-
-impl Into<iced_native::Background> for Color {
-    fn into(self) -> iced_native::Background {
-        iced_native::Background::Color(self.into())
-    }
-}
-
-impl Into<iced_native::Background> for &Color {
-    fn into(self) -> iced_native::Background {
-        iced_native::Background::Color(self.into())
     }
 }
 
