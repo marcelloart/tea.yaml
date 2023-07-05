@@ -89,7 +89,7 @@ impl StyleSheet for Scrollable {
         }
     }
 
-    fn hovered(&self, _: &Self::Style) -> Scrollbar {
+    fn hovered(&self, _: &Self::Style, _: bool) -> Scrollbar {
         Scrollbar {
             background: Some( self.state[1].color.into() ),
             border_radius: self.state[1].border.radius,
