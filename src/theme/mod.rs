@@ -97,7 +97,7 @@ impl Theme {
         let mut color = HashMap::new();
 
         for (k, v) in theme.color.iter() {
-            color.insert(k, Arc::new(v));
+            color.insert(k.clone(), Arc::new(*v));
         }
 
         // Deserialize the borders, as they only depend on colors.
