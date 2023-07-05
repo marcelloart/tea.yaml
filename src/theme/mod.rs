@@ -94,7 +94,11 @@ impl Theme {
         let mut failed = 0;
 
         // Deserialize all the colors.
-        self.color = theme.color.clone();
+        let mut color = HashMap::new();
+
+        for (k, v) in theme.color.iter() {
+            color.insert(k, Arc::new(v));
+        }
 
         // Deserialize the borders, as they only depend on colors.
         for (name, serial) in &theme.border {

@@ -22,12 +22,15 @@ use iced_native::{
 
 use serial::Component;
 
+use std::sync::Arc;
 
-#[derive(Clone, Copy, Debug)]
+
+
+#[derive(Clone, Debug)]
 pub struct Scrollable {
     /// State Themes of the scrollable.
     /// In order: active, hovered, dragging.
-    pub state: [State; 3]
+    pub state: [Arc<State>; 3]
 }
 
 impl Scrollable {
@@ -39,26 +42,26 @@ impl Scrollable {
         let dragging = Self::state( &serial.dragging, theme, 2 )?;
         
         // Find the first state theme that is not None.
-        let default = match (active, hovered, dragging) {
-            (Some(d), _, _) => d,
-            (_, Some(d), _) => d,
-            (_, _, Some(d)) => d,
+        let default = match (&active, &hovered, &dragging) {
+            (Some(d), _, _) => d.clone(),
+            (_, Some(d), _) => d.clone(),
+            (_, _, Some(d)) => d.clone(),
 
             _ => return Err(()),
         };
 
         Ok(Scrollable {
             state: [
-                if active.is_some()   { active.unwrap()   } else { default },
-                if hovered.is_some()  { hovered.unwrap()  } else { default },
-                if dragging.is_some() { dragging.unwrap() } else { default },
+                active.unwrap_or(default.clone()),
+                hovered.unwrap_or(default.clone()),
+                dragging.unwrap_or(default.clone()),
             ],
         })
     }
 
-    fn state(serial: &Component, theme: &Theme, index: usize) -> Result<Option<State>, ()> {
+    fn state(serial: &Component, theme: &Theme, index: usize) -> Result<Option<Arc<State>>, ()> {
         match serial {
-            Component::Defined( state ) => Ok( Some( State::from(&state, &theme)? ) ),
+            Component::Defined( state ) => Ok( Some( Arc::new( State::from(&state, &theme)? ) ) ),
 
             Component::Inherited( name ) => match theme.scrollable.get( name ) {
                 Some( scrollable ) => Ok( Some( scrollable.state[index].clone() ) ),
@@ -75,32 +78,32 @@ impl StyleSheet for Scrollable {
 
     fn active(&self, _: &Self::Style) -> Scrollbar {
         Scrollbar {
-            background: Some( self.state[0].color.into() ),
+            background: Some( (*self.state[0].color).into() ),
             border_radius: self.state[0].border.radius,
             border_width: self.state[0].border.width,
-            border_color: self.state[0].border.color.into(),
+            border_color: (*self.state[0].border.color).into(),
 
             scroller: Scroller {
-                color: self.state[0].scolor.into(),
+                color: (*self.state[0].scolor).into(),
                 border_radius: self.state[0].sborder.radius,
                 border_width: self.state[0].sborder.width,
-                border_color: self.state[0].sborder.color.into(),
+                border_color: (*self.state[0].sborder.color).into(),
             }
         }
     }
 
     fn hovered(&self, _: &Self::Style, _: bool) -> Scrollbar {
         Scrollbar {
-            background: Some( self.state[1].color.into() ),
+            background: Some( (*self.state[1].color).into() ),
             border_radius: self.state[1].border.radius,
             border_width: self.state[1].border.width,
-            border_color: self.state[1].border.color.into(),
+            border_color: (*self.state[1].border.color).into(),
 
             scroller: Scroller {
-                color: self.state[1].scolor.into(),
+                color: (*self.state[1].scolor).into(),
                 border_radius: self.state[1].sborder.radius,
                 border_width: self.state[1].sborder.width,
-                border_color: self.state[1].sborder.color.into(),
+                border_color: (*self.state[1].sborder.color).into(),
             }
         }
     }
@@ -108,19 +111,19 @@ impl StyleSheet for Scrollable {
 
 
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub struct State {
     /// Background color.
-    pub color: Color,
+    pub color: Arc<Color>,
 
     /// Border theme.
-    pub border: Border,
+    pub border: Arc<Border>,
 
     /// Scroller color.
-    pub scolor: Color,
+    pub scolor: Arc<Color>,
 
     /// Scroller border theme.
-    pub sborder: Border,
+    pub sborder: Arc<Border>,
 }
 
 impl State {
@@ -128,25 +131,25 @@ impl State {
     fn from(serial: &serial::State, theme: &Theme) -> Result<Self, ()> {
         // Get the scrollable color.
         let color = match theme.color.get(&serial.color) {
-            Some(color) => *color,
+            Some(color) => color.clone(),
             _ => return Err(()),
         };
 
         // Get the scrollable border.
         let border = match theme.border.get(&serial.border) {
-            Some(border) => *border,
+            Some(border) => border.clone(),
             _ => return Err(()),
         };
 
         // Get the scroller color.
         let scolor = match theme.color.get(&serial.scolor) {
-            Some(color) => *color,
+            Some(color) => color.clone(),
             _ => return Err(()),
         };
 
         // Get the scroller border.
         let sborder = match theme.border.get(&serial.sborder) {
-            Some(border) => *border,
+            Some(border) => border.clone(),
             _ => return Err(()),
         };
 

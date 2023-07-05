@@ -16,15 +16,17 @@ use iced_native::{
     },
 };
 
+use std::sync::Arc;
 
 
-#[derive(Clone, Copy, Debug)]
+
+#[derive(Clone, Debug)]
 pub struct ProgressBar {
     /// Background color.
-    pub background: Color,
+    pub background: Arc<Color>,
 
     /// Bar color.
-    pub bar: Color,
+    pub bar: Arc<Color>,
 
     /// Border radius.
     pub radius: f32,
@@ -35,13 +37,13 @@ impl ProgressBar {
     pub(crate) fn create(serial: &serial::ProgressBar, theme: &Theme) -> Result<Self, ()> {
         // Get the color of the progress bar background.
         let background = match theme.color.get(&serial.background) {
-            Some(color) => *color,
+            Some(color) => color.clone(),
             _ => return Err(()),
         };
 
         // Get the border of the progress bar bar.
         let bar = match theme.color.get(&serial.bar) {
-            Some(color) => *color,
+            Some(color) => color.clone(),
             _ => return Err(()),
         };
 
@@ -54,8 +56,8 @@ impl StyleSheet for ProgressBar {
 
     fn appearance(&self, _: &Self::Style) -> Appearance {
         Appearance {
-            background: self.background.into(),
-            bar: self.bar.into(),
+            background: (*self.background).into(),
+            bar: (*self.bar).into(),
             border_radius: self.radius,
         }
     }

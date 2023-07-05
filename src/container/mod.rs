@@ -16,15 +16,17 @@ use iced::{
     },
 };
 
+use std::sync::Arc;
 
 
-#[derive(Clone, Copy, Debug)]
+
+#[derive(Clone, Debug)]
 pub struct Container {
     /// Background of the container.
-    pub color: Color,
+    pub color: Arc<Color>,
 
     /// Border of the container.
-    pub border: Border,
+    pub border: Arc<Border>,
 }
 
 impl Container {
@@ -32,13 +34,13 @@ impl Container {
     pub(crate) fn create(serial: &serial::Container, theme: &Theme) -> Result<Self, ()> {
         // Get the color of the container.
         let color = match theme.color.get(&serial.color) {
-            Some(color) => *color,
+            Some(color) => color.clone(),
             _ => return Err(()),
         };
 
         // Get the border of the container.
         let border = match theme.border.get(&serial.border) {
-            Some(border) => *border,
+            Some(border) => border.clone(),
             _ => return Err(()),
         };
 
@@ -58,10 +60,10 @@ impl StyleSheet for Container {
     fn appearance(&self, _: &Self::Style) -> Appearance {
         Appearance {
             text_color: None,
-            background: Some( self.color.into() ),
+            background: Some( (*self.color).into() ),
             border_radius: self.border.radius,
             border_width: self.border.width,
-            border_color: self.border.color.into(),
+            border_color: (*self.border.color).into(),
         }
     }
 }
