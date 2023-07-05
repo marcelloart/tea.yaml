@@ -18,6 +18,7 @@ use iced_native::{
 
 use serial::{ MenuComponent, StateComponent };
 
+use std::rc::Rc;
 use std::sync::Arc;
 
 
@@ -84,6 +85,15 @@ impl Picklist {
     }
 }
 
+impl Into<iced::theme::PickList> for Picklist {
+    fn into(self) -> iced::theme::PickList {
+        // Create the new RC.
+        let rc = Rc::new(self);
+
+        iced::theme::PickList::Custom( rc.clone(), rc.clone() )
+    }
+}
+
 impl StyleSheet for Picklist {
     type Style = iced::Theme;
 
@@ -112,6 +122,21 @@ impl StyleSheet for Picklist {
     }
 }
 
+impl iced::overlay::menu::StyleSheet for Picklist {
+    type Style = iced::Theme;
+
+    fn appearance(&self, _: &Self::Style) -> iced::overlay::menu::Appearance {
+        iced::overlay::menu::Appearance {
+            text_color: (*self.menu.text[0]).into(),
+            background: (*self.menu.background[0]).into(),
+            border_radius: self.menu.border.radius,
+            border_width: self.menu.border.width,
+            border_color: (*self.menu.border.color).into(),
+            selected_text_color: (*self.menu.text[1]).into(),
+            selected_background: (*self.menu.background[1]).into(),
+        }
+    }
+}
 
 
 #[derive(Clone, Debug)]
