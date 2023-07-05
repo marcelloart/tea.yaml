@@ -101,6 +101,9 @@ impl Theme {
             color.insert(k.clone(), Arc::new(*v));
         }
 
+        // Set the color.
+        self.color = color;
+
         // Deserialize the borders, as they only depend on colors.
         for (name, serial) in &theme.border {
             match Border::create( serial, &self ) {
