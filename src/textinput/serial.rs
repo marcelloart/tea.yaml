@@ -17,6 +17,9 @@ pub struct TextInput {
     /// Focused state.
     pub focused: Component,
 
+    /// Disabled state.
+    pub disabled: Component,
+
     /// Placeholder color.
     pub placeholder: String,
 
@@ -25,6 +28,9 @@ pub struct TextInput {
 
     /// Selection color.
     pub selection: String,
+
+    /// Disabled color.
+    pub disabledc: String,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -34,6 +40,9 @@ pub struct State {
 
     /// Key to the border theme.
     pub border: String,
+
+    /// Key to the icon color.
+    pub icon: String,
 }
 
 

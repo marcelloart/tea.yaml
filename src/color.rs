@@ -23,6 +23,20 @@ impl Color {
     pub const WHITE: Color = Color(255, 255, 255, 1.0);
 }
 
+impl Into<iced_native::Color> for Color {
+    fn into(self) -> iced_native::Color {
+        let Color(r, g, b, a) = self;
+
+        iced_native::Color::from_rgba8(r, g, b, a)
+    }
+}
+
+impl Into<iced_native::Color> for &Color {
+    fn into(self) -> iced_native::Color {
+        iced_native::Color::from_rgba8(self.0, self.1, self.2, self.3)
+    }
+}
+
 impl Into<iced::Color> for Color {
     fn into(self) -> iced::Color {
         let Color(r, g, b, a) = self;
@@ -49,6 +63,18 @@ impl Into<iced::theme::Text> for &Color {
     }
 }
 
+impl Into<iced_native::Background> for Color {
+    fn into(self) -> iced_native::Background {
+        iced_native::Background::Color(self.into())
+    }
+}
+
+impl Into<iced_native::Background> for &Color {
+    fn into(self) -> iced_native::Background {
+        iced_native::Background::Color(self.into())
+    }
+}
+
 impl Into<iced::Background> for Color {
     fn into(self) -> iced::Background {
         iced::Background::Color(self.into())
@@ -61,7 +87,8 @@ impl Into<iced::Background> for &Color {
     }
 }
 
-impl iced_native::widget::text::StyleSheet for Color {
+
+impl iced::widget::text::StyleSheet for Color {
     type Style = Self;
 
     fn appearance(&self, _: Self::Style) -> iced::widget::text::Appearance {
