@@ -25,6 +25,13 @@ impl Color {
 
 
 
+impl Color {
+    /// Creates a new color.
+    pub const fn new(r: u8, g: u8, b: u8, a: f32) -> Self {
+        Color( r, g, b, a )
+    }
+}
+
 impl Into<iced::Color> for Color {
     fn into(self) -> iced::Color {
         let Color(r, g, b, a) = self;
