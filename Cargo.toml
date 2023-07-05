@@ -35,7 +35,7 @@ features = [
 ]
 
 [dependencies.iced_native]
-version = "0.8"
+version = "0.10.3"
 
 [dependencies.ron]
 version = "0.8"
