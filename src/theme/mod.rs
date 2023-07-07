@@ -97,7 +97,6 @@ impl Theme {
         let mut color = HashMap::new();
 
         for (k, v) in theme.color.iter() {
-            println!("Deser 1 color to theme: {}", v);
             color.insert(k.clone(), Arc::new(*v));
         }
 
