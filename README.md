@@ -18,7 +18,7 @@ Add this to you `Cargo.toml`
 marcel = "0.1"
 ```
 
-WARNING: `marcel v0.1` is compatible with `iced v0.6.0` and `iced_native v0.7` and with `serde v1`.
+WARNING: `marcel v0.1.2` is compatible with `iced v0.9.0` and `iced_native v0.10` and with `serde v1`.
 
 See below for a way to load a theme into your application.
 
@@ -119,8 +119,8 @@ A `StyleSheet` can be constructed as an explicit structure. The structure takes 
 
 ### 2. Style inheritance
 A `StyleSheet`'s fields can be constructed as a copy of another `StyleSheet` field. From all `StyleSheet` of a type,
-at least one MUST be defined using a combination of methods 1 and 3. When chaining inheritances, the crate currently
-accepts only up to a search depth of 10 (from the original `StyleSheet`). Circular dependencies will fail
+at least ONE MUST be defined using a combination of methods 1 and 3. When chaining inheritances, the crate currently
+accepts only up to a search depth of 10 (from the first `StyleSheet`). Circular dependencies will fail
 (e.g. being two styles `x` and `y`, the field `x.a` cannot depend on `y.a` if the field `y.b` depends on `x.b`).
 
 ```rust
@@ -210,9 +210,15 @@ See below a list of widgets that do not implement a theme yet.
 ## Dependencies
 See below a list of dependencies of this crate.
 
- - iced: 0.6.0
- - iced_native: 0.7
+ - iced: 0.9
+ - iced_native: 0.10
  - serde: 1 (feaures = [derive])
+
+
+## Contributing
+
+Any contribution intentionally submitted for inclusion in the work by you shall be licensed under either the MIT license or the Mozilla Public License Version 2.0, without any additional terms and conditions.
+
 
 ## License
 `marcel` is licensed under the terms of both MIT license and Mozilla Public License (Version 2.0).
