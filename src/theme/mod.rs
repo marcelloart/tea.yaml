@@ -206,7 +206,7 @@ impl core::fmt::Display for Theme {
         for (name, border) in &self.border {
             string += &format!("| |- \"{}\"\n", name);
             string += &format!("| | |- Color: {}\n", border.color);
-            string += &format!("| | |- Radius: {:.3}\n", border.radius);
+            string += &format!("| | |- Radius: {:?}\n", border.radius);
             string += &format!("| | |- Width:  {:.3}\n", border.width);
         }
 
@@ -224,7 +224,7 @@ impl core::fmt::Display for Theme {
                 string += &format!("| | | |- Text color: {}\n", button.state[state].text);
                 string +=          "| | | |- Border:\n";
                 string += &format!("| | |   |- Color: {}\n", button.state[state].border.color);
-                string += &format!("| | |   |- Radius: {:.3}\n", button.state[state].border.radius);
+                string += &format!("| | |   |- Radius: {:?}\n", button.state[state].border.radius);
                 string += &format!("| | |   |- Width:  {:.3}\n", button.state[state].border.width);
             }
         }
@@ -237,8 +237,8 @@ impl core::fmt::Display for Theme {
             string += &format!("| | |- Color: {}\n", container.color);
             string +=          "| | |- Border\n";
             string += &format!("| |   |- Color: {}\n", container.border.color);
-            string += &format!("| |   |- Radius: {:.3}\n", container.border.radius);
-            string += &format!("| |   |- Width:  {:.3}\n", container.border.width);
+            string += &format!("| |   |- Radius: {:?}\n", container.border.radius);
+            string += &format!("| |   |- Width:  {:?}\n", container.border.width);
         }
 
         // Display the pick list.
@@ -272,7 +272,7 @@ impl core::fmt::Display for Theme {
                 string += &format!("| | | |- Handle color     : {}\n", picklist.state[state].handle);
                 string +=          "| | | |- Border:\n";
                 string += &format!("| | |   |- Color: {}\n", picklist.state[state].border.color);
-                string += &format!("| | |   |- Radius: {:.3}\n", picklist.state[state].border.radius);
+                string += &format!("| | |   |- Radius: {:?}\n", picklist.state[state].border.radius);
                 string += &format!("| | |   |- Width:  {:.3}\n", picklist.state[state].border.width);
             }
 
@@ -285,7 +285,7 @@ impl core::fmt::Display for Theme {
 
             string +=          "| | | |- Border:\n";
             string += &format!("| | |   |- Color: {}\n", picklist.menu.border.color);
-            string += &format!("| | |   |- Radius: {:.3}\n", picklist.menu.border.radius);
+            string += &format!("| | |   |- Radius: {:?}\n", picklist.menu.border.radius);
             string += &format!("| | |   |- Width:  {:.3}\n", picklist.menu.border.width);
         }
 
@@ -296,7 +296,7 @@ impl core::fmt::Display for Theme {
             string += &format!("| |- \"{}\"\n", name);
             string += &format!("| | |- Background: {}\n", progressbar.background);
             string += &format!("| | |- Bar:        {}\n", progressbar.bar);
-            string += &format!("| | |- Radius: {:.3}\n", progressbar.radius);
+            string += &format!("| | |- Radius: {:?}\n", progressbar.radius);
         }
 
         // Display the scrollbars.
@@ -312,13 +312,13 @@ impl core::fmt::Display for Theme {
                 string += &format!("| | | |- Scrollbar color: {}\n", scrollable.state[state].color);
                 string +=          "| | | |- Scrollbar border:\n";
                 string += &format!("| | |   |- Color: {}\n", scrollable.state[state].border.color);
-                string += &format!("| | |   |- Radius: {:.3}\n", scrollable.state[state].border.radius);
+                string += &format!("| | |   |- Radius: {:?}\n", scrollable.state[state].border.radius);
                 string += &format!("| | |   |- Width:  {:.3}\n", scrollable.state[state].border.width);
 
                 string += &format!("| | | |- Scroller color: {}\n", scrollable.state[state].scolor);
                 string +=          "| | | |- Scroller border:\n";
                 string += &format!("| | |   |- Color: {}\n", scrollable.state[state].sborder.color);
-                string += &format!("| | |   |- Radius: {:.3}\n", scrollable.state[state].sborder.radius);
+                string += &format!("| | |   |- Radius: {:?}\n", scrollable.state[state].sborder.radius);
                 string += &format!("| | |   |- Width:  {:.3}\n", scrollable.state[state].sborder.width);
             }
         }
@@ -336,7 +336,7 @@ impl core::fmt::Display for Theme {
                 string += &format!("| | | |- Background: {}\n", textinput.state[state].background);
                 string +=          "| | | |- Border:\n";
                 string += &format!("| | |   |- Color: {}\n", textinput.state[state].border.color);
-                string += &format!("| | |   |- Radius: {:.3}\n", textinput.state[state].border.radius);
+                string += &format!("| | |   |- Radius: {:?}\n", textinput.state[state].border.radius);
                 string += &format!("| | |   |- Width:  {:.3}\n", textinput.state[state].border.width);
             }
 
@@ -354,7 +354,7 @@ impl core::fmt::Display for Theme {
             string += &format!("| | |- Text color: {}\n", tooltip.text);
             string +=          "| | |- Border:\n";
             string += &format!("| |   |- Color: {}\n", tooltip.border.color);
-            string += &format!("| |   |- Radius: {:.3}\n", tooltip.border.radius);
+            string += &format!("| |   |- Radius: {:?}\n", tooltip.border.radius);
             string += &format!("| |   |- Width:  {:.3}\n", tooltip.border.width);
         }
 

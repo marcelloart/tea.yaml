@@ -6,19 +6,12 @@ pub(crate) mod serial;
 
 
 
-use crate::{ Border, Color, Theme };
+use crate::{ Border, Color, Theme, };
 
-use iced_native::{
-    widget::{
-        pick_list::{
-            Appearance, StyleSheet,
-        },
-    },
-};
+use iced::widget::pick_list::{ Appearance, StyleSheet, };
 
 use serial::{ MenuComponent, StateComponent };
 
-use std::rc::Rc;
 use std::sync::Arc;
 
 
@@ -87,6 +80,8 @@ impl Picklist {
 
 impl Into<iced::theme::PickList> for Picklist {
     fn into(self) -> iced::theme::PickList {
+        use std::rc::Rc;
+
         // Create the new RC.
         let rc = Rc::new(self);
 

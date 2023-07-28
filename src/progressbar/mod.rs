@@ -6,14 +6,14 @@ pub(crate) mod serial;
 
 
 
-use crate::{ Color, Theme };
+use crate::{ Color, Theme, };
 
-use iced_native::{
-    widget::{
-        progress_bar::{
-            Appearance, StyleSheet,
-        },
-    },
+use iced::{
+    BorderRadius,
+
+    widget::progress_bar::{
+        Appearance, StyleSheet,
+    }
 };
 
 use std::sync::Arc;
@@ -29,7 +29,7 @@ pub struct ProgressBar {
     pub bar: Arc<Color>,
 
     /// Border radius.
-    pub radius: f32,
+    pub radius: BorderRadius,
 }
 
 impl ProgressBar {
@@ -47,7 +47,7 @@ impl ProgressBar {
             _ => return Err(()),
         };
 
-        Ok( ProgressBar { background, bar, radius: serial.radius } )
+        Ok( ProgressBar { background, bar, radius: BorderRadius::from( serial.radius ) } )
     }
 }
 

@@ -28,14 +28,6 @@ exclude = [
 
 [dependencies.iced]
 version = "0.10"
-features = [
-    "wgpu", "debug",
-    "default_system_font",
-    "tokio",
-]
-
-[dependencies.iced_native]
-version = "0.10.3"
 
 [dependencies.ron]
 version = "0.8"

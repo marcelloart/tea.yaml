@@ -8,13 +8,11 @@ pub(crate) mod serial;
 
 use crate::{ Border, Color, Theme };
 
-use iced_native::{
+use iced::{
     Vector,
 
-    widget::{
-        button::{
-            Appearance, StyleSheet
-        },
+    widget::button::{
+        Appearance, StyleSheet,
     },
 };
 

@@ -6,19 +6,9 @@ pub(crate) mod serial;
 
 
 
-use crate::{ Border, Color, Theme };
+use crate::{ Border, Color, Theme, };
 
-use iced_native::{
-    widget::{
-        scrollable::{
-            StyleSheet,
-
-            style::{
-                Scrollbar, Scroller,
-            },
-        },
-    },
-};
+use iced::widget::scrollable::{ StyleSheet, Scrollbar, Scroller, };
 
 use serial::Component;
 
