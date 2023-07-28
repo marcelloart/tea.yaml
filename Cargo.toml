@@ -27,7 +27,7 @@ exclude = [
 [dependencies]
 
 [dependencies.iced]
-version = "0.9.0"
+version = "0.10"
 features = [
     "wgpu", "debug",
     "default_system_font",
