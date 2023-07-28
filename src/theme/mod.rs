@@ -9,12 +9,8 @@ pub mod serial;
 use crate::*;
 
 use std::{
-    collections::{
-        HashMap,
-    },
-    sync::{
-        Arc,
-    },
+    collections::HashMap,
+    sync::Arc,
 };
 
 
