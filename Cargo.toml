@@ -35,7 +35,10 @@ optional = true
 
 [dependencies.serde]
 version = "1"
-features = ["derive"]
+#features = ["derive"]
+
+[dependencies.serde_derive]
+version = "1"
 
 
 
